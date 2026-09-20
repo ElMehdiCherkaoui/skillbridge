@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: skillbridge_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: skillbridge
+      POSTGRES_PASSWORD: skillbridge
+      POSTGRES_DB: skillbridge
+    ports:
+      - "18543:5432"
+    volumes:
+      - skillbridge_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skillbridge"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: skillbridge_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://skillbridge:skillbridge@db:5432/skillbridge?sslmode=disable
+      PORT: "8080"
+      JWT_SECRET: skillbridge-dev-secret-change-me
+      JWT_EXPIRY_HOURS: "72"
+      CORS_ORIGINS: http://localhost:3000
+      MIGRATIONS_DIR: /app/migrations
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+    container_name: skillbridge_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  skillbridge_pgdata:

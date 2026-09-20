@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme (slate-50 canvas, white surfaces) */
+    --canvas: #f6f8fb;
+    --surface: #ffffff;
+    --surface-2: #f1f5f9;
+    --edge: #e2e8f0;
+    --edge-soft: #eef2f7;
+    --ink: #0f172a;
+    --ink-2: #475569;
+    --ink-3: #94a3b8;
+    --accent-grade: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    /* Channel forms so Tailwind opacity modifiers (/60 etc.) resolve */
+    --canvas-rgb: 246 248 251;
+    --surface-rgb: 255 255 255;
+    --surface-2-rgb: 241 245 249;
+    --edge-rgb: 226 232 240;
+    --edge-soft-rgb: 238 242 247;
+    --ink-rgb: 15 23 42;
+    --ink-2-rgb: 71 85 105;
+    --ink-3-rgb: 148 163 184;
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Night theme — deep slate-blue canvas, never pure black */
+    --canvas: #0a0f1e;
+    --surface: #0f172a;
+    --surface-2: #16213a;
+    --edge: rgba(148, 163, 184, 0.14);
+    --edge-soft: rgba(148, 163, 184, 0.08);
+    --ink: #e2e8f0;
+    --ink-2: #94a3b8;
+    --ink-3: #64748b;
+    --canvas-rgb: 10 15 30;
+    --surface-rgb: 15 23 42;
+    --surface-2-rgb: 22 33 58;
+    --edge-rgb: 148 163 184;
+    --edge-soft-rgb: 148 163 184;
+    --ink-rgb: 226 232 240;
+    --ink-2-rgb: 148 163 184;
+    --ink-3-rgb: 100 116 139;
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--edge);
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-canvas text-ink;
+    background-image:
+      radial-gradient(1200px 600px at 15% -10%, rgba(99, 102, 241, 0.07), transparent 60%),
+      radial-gradient(900px 500px at 105% 0%, rgba(139, 92, 246, 0.06), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-brand-500/30;
+  }
+}
+
+@layer components {
+  /* ---------- Buttons ---------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-brand-600 to-violet-600 text-white shadow-sm hover:shadow-[0_6px_20px_-6px_rgba(99,102,241,0.55)] hover:brightness-110 active:brightness-95;
+  }
+  .btn-secondary {
+    @apply btn border border-edge bg-surface text-ink hover:bg-surface-2;
+  }
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-700;
+  }
+  .btn-ghost {
+    @apply btn text-ink-2 hover:bg-surface-2 hover:text-ink;
+  }
+
+  /* ---------- Inputs ---------- */
+  .input {
+    @apply w-full rounded-xl border border-edge bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-3 transition focus:border-brand-500/70 focus:outline-none focus:ring-4 focus:ring-brand-500/15;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-2;
+  }
+
+  /* ---------- Cards ---------- */
+  .card {
+    @apply rounded-2xl border border-edge bg-surface shadow-[0_1px_2px_rgba(15,23,42,0.04)];
+  }
+  .card-header {
+    @apply border-b border-edge-soft px-5 py-4;
+  }
+  .card-body {
+    @apply px-5 py-4;
+  }
+
+  /* ---------- Tables ---------- */
+  .table {
+    @apply min-w-full divide-y divide-edge text-sm;
+  }
+  .table thead th {
+    @apply bg-surface-2/60 px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-3;
+  }
+  .table tbody td {
+    @apply px-4 py-3 align-middle;
+  }
+  .table tbody tr {
+    @apply border-b border-edge-soft last:border-0 transition-colors hover:bg-surface-2/50;
+  }
+
+  .prose-sm-custom {
+    @apply whitespace-pre-line text-sm leading-relaxed text-ink-2;
+  }
+}
+
+@keyframes sb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sb-spinner {
+  border: 3px solid rgba(99, 102, 241, 0.2);
+  border-top-color: #6366f1;
+  border-radius: 9999px;
+  width: 2rem;
+  height: 2rem;
+  animation: sb-spin 0.8s linear infinite;
+}
+
+/* Subtle scrollbars that match each theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--edge) transparent;
+}

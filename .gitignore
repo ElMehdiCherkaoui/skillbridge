@@ -1,0 +1,41 @@
+# --- Node / Next.js (frontend) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/tsconfig.tsbuildinfo
+frontend/*.tsbuildinfo
+frontend/.env*.local
+frontend/.env*.production
+frontend/.vercel
+frontend/next-env.d.ts
+
+# --- Go (backend) ---
+backend/bin/
+backend/*.exe
+backend/*.test
+backend/coverage.out
+backend/vendor/
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# --- Docker ---
+*.log
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editors / IDEs ---
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Misc ---
+*.tmp
+*.bak
