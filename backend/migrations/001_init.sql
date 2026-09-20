@@ -1,7 +1,6 @@
 -- 001_init.sql
 -- SkillBridge database schema
-
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+-- gen_random_uuid() is built into PostgreSQL 13+ (no extension required)
 
 -- Users (students and admin/teachers)
 CREATE TABLE IF NOT EXISTS users (

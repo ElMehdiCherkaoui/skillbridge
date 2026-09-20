@@ -44,6 +44,12 @@ func (a *App) Handler() http.Handler {
 	statsHandler := NewStatsHandler(repositories.NewStatsRepository(a.pool))
 
 	// -- Public routes --
+	r.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		writeJSON(w, http.StatusOK, map[string]string{"status": "ok", "service": "skillbridge-api"})
+	})
+	r.HandleFunc("GET /health", func(w http.ResponseWriter, r *http.Request) {
+		writeJSON(w, http.StatusOK, map[string]string{"status": "ok", "service": "skillbridge-api"})
+	})
 	r.HandleFunc("GET /api/health", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusOK, map[string]string{"status": "ok", "service": "skillbridge-api"})
 	})
